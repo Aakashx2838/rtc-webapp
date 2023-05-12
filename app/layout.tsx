@@ -1,7 +1,6 @@
 import ToasterContext from "./context/ToasterContext";
 import AuthContext from "./context/AuthContext";
 import ActiveStatus from "./components/ActiveStatus";
-import LoadingProgressbar from "./components/LoadingProgressbar";
 
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -20,9 +19,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className} suppressHydrationWarning={true}>
+      <body className={inter.className}>
         <AuthContext>
-          {/* <LoadingProgressbar /> */}
           <ToasterContext />
           <ActiveStatus />
           {children}

@@ -36,7 +36,7 @@ export default function AuthForm() {
   useEffect(() => {
     if (session?.status === "authenticated") {
       toast.success("Logged in successfully!");
-      router.push("/users");
+      router.push("/conversations");
     }
   }, [session?.status, router]);
 
@@ -64,10 +64,19 @@ export default function AuthForm() {
     if (varient === "REGISTER") {
       axios
         .post("/api/register", data)
+        .then(() =>
+          signIn("credentials", {
+            ...data,
+            redirect: false,
+          }),
+        )
         .then((callback) => {
-          if (callback?.data?.id) {
-            toast.success("Registered successfully!");
-            signIn("credentials", data);
+          if (callback?.error) {
+            toast.error("Invalid credentials!");
+          }
+
+          if (callback?.ok) {
+            router.push("/conversations");
           }
         })
         .catch(() => toast.error("Something went wrong!"))
@@ -83,9 +92,9 @@ export default function AuthForm() {
           if (callback?.error) {
             toast.error("Invalid credentials!");
           }
-          if (callback?.ok && !callback?.error) {
-            toast.success("Logged in successfully!");
-            router.push("/users");
+
+          if (callback?.ok) {
+            router.push("/conversations");
           }
         })
         .finally(() => setIsLoading(false));
@@ -94,15 +103,15 @@ export default function AuthForm() {
 
   const socialAction = (action: string) => {
     setIsLoading(true);
-    signIn(action, {
-      redirect: false,
-    })
+
+    signIn(action, { redirect: false })
       .then((callback) => {
         if (callback?.error) {
           toast.error("Invalid credentials!");
         }
-        if (callback?.ok && !callback?.error) {
-          toast.success("Logged in successfully!");
+
+        if (callback?.ok) {
+          router.push("/conversations");
         }
       })
       .finally(() => setIsLoading(false));
