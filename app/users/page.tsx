@@ -1,32 +1,11 @@
-//* Type definitions
+import EmptyState from '../components/EmptyState';
 
-//* Dependency Library imports
-
-//* Component dependencies
-import EmptyState from "../components/EmptyState";
-
-//* Redux
-
-//* Configurations
-
-const Users = () => {
-  //* Hooks
-
-  //* Props
-
-  //* State
-
-  //* Effects
-
-  //* Functions
-
-  //* Render
-
+const People = () => {
   return (
     <div className="hidden lg:block lg:pl-80 h-full">
       <EmptyState />
     </div>
-  );
-};
-
-export default Users;
+   );
+}
+ 
+export default People;

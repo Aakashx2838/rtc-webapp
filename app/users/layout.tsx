@@ -1,10 +1,14 @@
-import { ReactNode } from "react";
-import Sidebar from "../components/sidebar/Sidebar";
 import getUsers from "../actions/getUsers";
+import Sidebar from "../components/sidebar/Sidebar";
 import UserList from "./components/UserList";
 
-async function UsersLayout({ children }: { children: ReactNode }) {
+export default async function UsersLayout({
+  children
+}: {
+  children: React.ReactNode,
+}) {
   const users = await getUsers();
+
   return (
     // @ts-expect-error Server Component
     <Sidebar>
@@ -15,5 +19,3 @@ async function UsersLayout({ children }: { children: ReactNode }) {
     </Sidebar>
   );
 }
-
-export default UsersLayout;

@@ -1,37 +1,16 @@
-"use client";
+'use client';
 
-//* Type definitions
-import { FC, ReactNode } from "react";
-interface IModalProps {
+import React, { Fragment } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { IoClose } from 'react-icons/io5'
+
+interface ModalProps {
   isOpen?: boolean;
   onClose: () => void;
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
-//* Dependency Library imports
-
-//* Component dependencies
-import React, { Fragment } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { IoClose } from "react-icons/io5";
-
-//* Redux
-
-//* Configurations
-
-const Modal: FC<IModalProps> = ({ isOpen, onClose, children }) => {
-  //* Hooks
-
-  //* Props
-
-  //* State
-
-  //* Effects
-
-  //* Functions
-
-  //* Render
-
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -44,7 +23,7 @@ const Modal: FC<IModalProps> = ({ isOpen, onClose, children }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div
+          <div 
             className="
               fixed 
               inset-0 
@@ -56,7 +35,7 @@ const Modal: FC<IModalProps> = ({ isOpen, onClose, children }) => {
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div
+          <div 
             className="
               flex 
               min-h-full 
@@ -76,7 +55,7 @@ const Modal: FC<IModalProps> = ({ isOpen, onClose, children }) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel
+              <Dialog.Panel 
                 className="
                   relative 
                   transform 
@@ -96,7 +75,7 @@ const Modal: FC<IModalProps> = ({ isOpen, onClose, children }) => {
                   sm:p-6
                 "
               >
-                <div
+                <div 
                   className="
                     absolute 
                     right-0 
@@ -133,7 +112,7 @@ const Modal: FC<IModalProps> = ({ isOpen, onClose, children }) => {
         </div>
       </Dialog>
     </Transition.Root>
-  );
-};
+  )
+}
 
 export default Modal;

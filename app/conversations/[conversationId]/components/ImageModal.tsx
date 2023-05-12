@@ -1,45 +1,35 @@
-"use client";
+'use client';
 
-import { FC } from "react";
+import Modal from '@/app/components/modals/Modal';
+import Image from 'next/image';
 
-//* Type definitions
-interface IImageModalProps {
-  isOpen: boolean;
+interface ImageModalProps {
+  isOpen?: boolean;
   onClose: () => void;
-  src: string;
+  src?: string | null;
 }
 
-//* Dependency Library imports
-
-//* Component dependencies
-import Modal from "@/app/components/Modal";
-import Image from "next/image";
-
-//* Redux
-
-//* Configurations
-
-const ImageModal: FC<IImageModalProps> = ({ isOpen, onClose, src }) => {
-  //* Hooks
-
-  //* Props
-
-  //* State
-
-  //* Effects
-
-  //* Functions
-  if (!src) return null;
-
-  //* Render
+const ImageModal: React.FC<ImageModalProps> = ({ 
+  isOpen, 
+  onClose, 
+  src
+}) => {
+  if (!src) {
+    return null;
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="w-80 h-80">
-        <Image className="object-cover" fill alt="Image" src={src} />
+        <Image 
+          className="object-cover" 
+          fill 
+          alt="Image" 
+          src={src}
+        />
       </div>
     </Modal>
-  );
-};
+  )
+}
 
 export default ImageModal;

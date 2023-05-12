@@ -1,38 +1,22 @@
-//* Type definitions
-import { ReactNode } from "react";
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
-//* Dependency Library imports
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import DesktopSidebar from './DesktopSidebar';
+import MobileFooter from './MobileFooter';
 
-//* Component dependencies
-import DesktopSidebar from "./DesktopSidebar";
-import MobileFooter from "./MobileFooter";
-
-//* Redux
-
-//* Configurations
-
-async function Sidebar({ children }: { children: ReactNode }) {
-  //* Hooks
-
-  //* Props
-
-  //* State
-
-  //* Effects
-
-  //* Functions
+async function Sidebar({ children }: {
+  children: React.ReactNode,
+}) {
   const currentUser = await getCurrentUser();
-
-  //* Render
 
   return (
     <div className="h-full">
       <DesktopSidebar currentUser={currentUser!} />
       <MobileFooter />
-      <main className="lg:pl-20 h-full">{children}</main>
+      <main className="lg:pl-20 h-full">
+        {children}
+      </main>
     </div>
-  );
+  )
 }
 
 export default Sidebar;

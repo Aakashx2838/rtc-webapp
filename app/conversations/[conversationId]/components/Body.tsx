@@ -1,95 +1,79 @@
-"use client";
+'use client';
 
-//* Type definitions
-import { FC } from "react";
-interface IBodyProps {
-  initialMessages: IFullMessageType[];
+import axios from "axios";
+import { useEffect, useRef, useState } from "react";
+
+import { pusherClient } from "@/app/libs/pusher";
+import useConversation from "@/app/hooks/useConversation";
+import MessageBox from "./MessageBox";
+import { FullMessageType } from "@/app/types";
+import { find } from "lodash";
+
+interface BodyProps {
+  initialMessages: FullMessageType[];
 }
 
-//* Dependency Library imports
-import { useState, useEffect, useRef } from "react";
-import { pusherClient } from "@/app/libs/pusher";
-import { find } from "lodash";
-import useConversation from "@/app/hooks/useConversation";
-
-//* Component dependencies
-import MessageBox from "./MessageBox";
-import { IFullMessageType } from "@/app/types";
-import axios from "axios";
-
-//* Redux
-
-//* Configurations
-
-const Body: FC<IBodyProps> = ({ initialMessages }) => {
-  //* Hooks
+const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const [messages, setMessages] = useState(initialMessages);
+  
   const { conversationId } = useConversation();
 
-  //* Props
-
-  //* State
-  const [messages, setMessages] = useState<IFullMessageType[]>(initialMessages);
-  const bottomRef = useRef<HTMLDivElement>(null);
-
-  //* Effects
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
   }, [conversationId]);
 
   useEffect(() => {
-    pusherClient.subscribe(conversationId);
-    bottomRef?.current?.scrollIntoView({ behavior: "smooth" });
+    pusherClient.subscribe(conversationId)
+    bottomRef?.current?.scrollIntoView();
 
-    const messageHandler = (message: IFullMessageType) => {
+    const messageHandler = (message: FullMessageType) => {
       axios.post(`/api/conversations/${conversationId}/seen`);
 
-      setMessages((prev) => {
-        if (find(prev, { id: message.id })) return prev;
+      setMessages((current) => {
+        if (find(current, { id: message.id })) {
+          return current;
+        }
 
-        return [...prev, message];
+        return [...current, message]
       });
-
-      bottomRef?.current?.scrollIntoView({ behavior: "smooth" });
+      
+      bottomRef?.current?.scrollIntoView();
     };
 
-    const updateMessageHandler = (newMessage: IFullMessageType) => {
-      setMessages((current) =>
-        current.map((currentMessage) => {
-          if (currentMessage.id === newMessage.id) {
-            return newMessage;
-          }
-          return currentMessage;
-        }),
-      );
+    const updateMessageHandler = (newMessage: FullMessageType) => {
+      setMessages((current) => current.map((currentMessage) => {
+        if (currentMessage.id === newMessage.id) {
+          return newMessage;
+        }
+  
+        return currentMessage;
+      }))
     };
+  
 
-    pusherClient.bind("messages:new", messageHandler);
-    pusherClient.bind("messages:update", updateMessageHandler);
+    pusherClient.bind('messages:new', messageHandler)
+    pusherClient.bind('message:update', updateMessageHandler);
 
     return () => {
-      pusherClient.unsubscribe(conversationId);
-
-      pusherClient.unbind("messages:new");
-      pusherClient.unbind("messages:update");
-    };
+      pusherClient.unsubscribe(conversationId)
+      pusherClient.unbind('messages:new', messageHandler)
+      pusherClient.unbind('message:update', updateMessageHandler)
+    }
   }, [conversationId]);
 
-  //* Functions
-
-  //* Render
-
-  return (
+  return ( 
     <div className="flex-1 overflow-y-auto">
       {messages.map((message, i) => (
-        <MessageBox
-          key={message.id}
-          isLast={i === messages.length - 1}
+        <MessageBox 
+          isLast={i === messages.length - 1} 
+          key={message.id} 
           data={message}
         />
       ))}
-      <div ref={bottomRef} className="pt-24" />
+      <div className="pt-24" ref={bottomRef} />
     </div>
   );
-};
-
+}
+ 
 export default Body;

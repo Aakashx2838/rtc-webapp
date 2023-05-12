@@ -1,46 +1,43 @@
-"use client";
+'use client';
 
 import useConversation from "@/app/hooks/useConversation";
-//* Type definitions
-
-//* Dependency Library imports
-import useRoutes from "@/app/hooks/useRoute";
-
-//* Component dependencies
+import useRoutes from "@/app/hooks/useRoutes";
 import MobileItem from "./MobileItem";
 
-//* Redux
-
-//* Configurations
-
-export default function MobileFooter() {
-  //* Hooks
+const MobileFooter = () => {
   const routes = useRoutes();
   const { isOpen } = useConversation();
-  if (isOpen) return null;
 
-  //* Props
+  if (isOpen) {
+    return null;
+  }
 
-  //* State
-
-  //* Effects
-
-  //* Functions
-
-  //* Render
-
-  return (
-    <div className="fixed justify-between w-full bottom-0 z-40 flex items-center bg-white border-t-[1px] lg:hidden">
-      {routes.map((item) => (
-        <MobileItem
-          key={item.label}
-          href={item.href}
-          label={item.label}
-          icon={item.icon}
-          active={item.active}
-          onClick={item.onClick}
+  return ( 
+    <div 
+      className="
+        fixed 
+        justify-between 
+        w-full 
+        bottom-0 
+        z-40 
+        flex 
+        items-center 
+        bg-white 
+        border-t-[1px] 
+        lg:hidden
+      "
+    >
+      {routes.map((route) => (
+        <MobileItem 
+          key={route.href} 
+          href={route.href} 
+          active={route.active} 
+          icon={route.icon}
+          onClick={route.onClick}
         />
       ))}
     </div>
-  );
+   );
 }
+ 
+export default MobileFooter;

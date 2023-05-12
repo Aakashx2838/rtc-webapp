@@ -1,30 +1,10 @@
-"use client";
-//* Type definitions
+'use client';
 
-//* Dependency Library imports
+import React, { Fragment } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { ClipLoader } from 'react-spinners';
 
-//* Component dependencies
-import { Fragment } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { ClipLoader } from "react-spinners";
-
-//* Redux
-
-//* Configurations
-
-export default function LoadingModal() {
-  //* Hooks
-
-  //* Props
-
-  //* State
-
-  //* Effects
-
-  //* Functions
-
-  //* Render
-
+const LoadingModal = () => {
   return (
     <Transition.Root show as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={() => {}}>
@@ -37,27 +17,27 @@ export default function LoadingModal() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div
+          <div 
             className="
-            fixed 
-            inset-0 
-            bg-gray-100 
-            bg-opacity-50 
-            transition-opacity
-          "
+              fixed 
+              inset-0 
+              bg-gray-100 
+              bg-opacity-50 
+              transition-opacity
+            "
           />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div
+          <div 
             className="
-            flex 
-            min-h-full 
-            items-center 
-            justify-center 
-            p-4 
-            text-center 
-          "
+              flex 
+              min-h-full 
+              items-center 
+              justify-center 
+              p-4 
+              text-center 
+            "
           >
             <Transition.Child
               as={Fragment}
@@ -76,5 +56,7 @@ export default function LoadingModal() {
         </div>
       </Dialog>
     </Transition.Root>
-  );
+  )
 }
+
+export default LoadingModal;
