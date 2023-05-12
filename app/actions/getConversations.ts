@@ -3,7 +3,10 @@ import getCurrentUser from "./getCurrentUser";
 
 const getConversations = async () => {
   const currentUser = await getCurrentUser();
-  if (!currentUser?.id) return [];
+
+  if (!currentUser?.id) {
+    return [];
+  }
 
   try {
     const conversations = await prisma.conversation.findMany({
@@ -27,7 +30,7 @@ const getConversations = async () => {
     });
 
     return conversations;
-  } catch (e: any) {
+  } catch (error: any) {
     return [];
   }
 };
