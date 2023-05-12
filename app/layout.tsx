@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
         <AuthContext>
-          <LoadingProgressbar />
+          {/* <LoadingProgressbar /> */}
           <ToasterContext />
           <ActiveStatus />
           {children}
