@@ -1,21 +1,26 @@
-import './globals.css'
-import AuthContext from './context/AuthContext'
-import ActiveStatus from './components/ActiveStatus'
-import ToasterContext from './context/ToasterContext'
+import "./globals.css";
+import AuthContext from "./context/AuthContext";
+import ActiveStatus from "./components/ActiveStatus";
+import ToasterContext from "./context/ToasterContext";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+});
 
 export const metadata = {
-  title: 'Messenger',
-  description: 'Messenger Clone',
-}
+  title: "Messenger",
+  description: "Messenger Clone",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className={inter.className}>
         <AuthContext>
           <ToasterContext />
           <ActiveStatus />
@@ -23,5 +28,5 @@ export default function RootLayout({
         </AuthContext>
       </body>
     </html>
-  )
+  );
 }
